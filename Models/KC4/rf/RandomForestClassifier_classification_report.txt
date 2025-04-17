@@ -1,0 +1,17 @@
+模型评估结果:
+accuracy: 0.7692
+precision: 0.8333
+recall: 0.7143
+f1: 0.7692
+mcc: 0.5476
+auc: 0.7976
+
+详细分类报告:
+              precision    recall  f1-score   support
+
+           0     0.7143    0.8333    0.7692         6
+           1     0.8333    0.7143    0.7692         7
+
+    accuracy                         0.7692        13
+   macro avg     0.7738    0.7738    0.7692        13
+weighted avg     0.7784    0.7692    0.7692        13
