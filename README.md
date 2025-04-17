@@ -1,19 +1,19 @@
-# Software Defect Prediction Model
+# 软件缺陷预测模型
 
-This project implements a machine learning-based software defect prediction model using NASA datasets. The model is designed to identify potential defects in software modules based on various software metrics.
+本项目基于NASA数据集，利用机器学习技术构建软件缺陷预测模型，旨在识别软件模块中的潜在缺陷。
 
-## Background
+## 背景
 
-Software defect prediction is a crucial area in software quality assurance that aims to identify defect-prone modules before they are released to users. By accurately predicting which modules are likely to contain defects, development teams can allocate testing resources more efficiently and improve software quality. This project was developed as a final assignment for a Software Testing course.
+本项目是软件测试课程的期末作业。
 
-## Dataset
+## 数据集
 
-The project uses NASA defect datasets, which contain software metrics and defect information from various NASA projects. These datasets include metrics such as:
-- Lines of code
-- McCabe complexity measures
-- Halstead complexity measures
-- Code churn metrics
-- And defect labels (defective or non-defective)
+本项目使用NASA缺陷数据集，包含各种软件度量指标和缺陷信息：
+- 代码行数
+- McCabe复杂度指标
+- Halstead复杂度指标
+- 代码变更指标
+- 缺陷标签（有缺陷/无缺陷）
 
 ## Project Structure
 
@@ -33,145 +33,117 @@ The project uses NASA defect datasets, which contain software metrics and defect
 └── README.md
 ```
 
-## Workflow
+## 工作流程
 
-The complete workflow for this project consists of the following steps:
+项目完整工作流程包括以下步骤：
 
-1. **Data Conversion** (if needed):
+1. **数据转换**：
    ```bash
    python arff_to_csv_converter.py
    ```
-   Converts the original ARFF files to CSV format for easier processing.
+   将原始ARFF文件转换为CSV格式。
 
-2. **Data Loading and Cleaning**:
+2. **数据加载与清洗**：
    ```bash
    python data_loader.py
    ```
-   Loads the datasets, handles missing values, and performs basic preprocessing.
+   加载数据集，处理缺失值和基本预处理。
 
-3. **Train-Test Splitting**:
+3. **训练-测试集划分**：
    ```bash
    python data_splitter.py --dataset CM1
    ```
-   Splits a specific dataset into training, validation, and test sets.
+   将数据集划分为训练集、验证集和测试集。
 
-4. **Data Standardization**:
+4. **数据标准化**：
    ```bash
    python data_standardizer.py --dataset CM1 --verify
    ```
-   Standardizes the dataset and verifies the standardization results.
+   标准化数据集并验证结果。
 
-5. **Model Tuning**:
+5. **模型调优**：
    ```bash
    python model_tuner.py --input Standardized/CM1/standardized_data.npz --model rf
    ```
-   Tunes a Random Forest model using grid search and cross-validation.
+   使用网格搜索和交叉验证调优随机森林模型。
 
-6. **Interactive Model Tuning** (alternative to step 5):
+6. **交互式模型调优**：
    ```bash
    python model_tuner_interactive.py
    ```
-   Launches an interactive interface for dataset selection and model tuning.
+   启动交互式界面进行数据集选择和模型调优。
 
-## Features
+## 功能特点
 
-1. **Data Processing Pipeline**:
-   - Converting ARFF to CSV format
-   - Loading and cleaning NASA defect datasets
-   - Handling missing values
-   - Train-validation-test splitting
-   - Feature standardization (zero mean and unit variance)
-   - Verification of standardization results
+1. **数据处理流程**：
+   - ARFF转CSV格式
+   - 数据加载、清洗与预处理
+   - 训练-验证-测试集划分
+   - 特征标准化及验证
 
-2. **Model Parameter Tuning**:
-   - Hyperparameter optimization using grid search and cross-validation
-   - Support for multiple machine learning algorithms:
-     - Random Forest
-     - Support Vector Machine
-     - Logistic Regression
-     - K-Nearest Neighbors
-     - Decision Tree
-     - Gradient Boosting
-   - Progress tracking with progress bars
+2. **模型参数调优**：
+   - 使用网格搜索和交叉验证进行超参数优化
+   - 支持多种机器学习算法（随机森林、SVM、逻辑回归等）
+   - 进度跟踪与可视化
 
-3. **Model Evaluation**:
-   - Comprehensive performance metrics:
-     - Accuracy
-     - Precision
-     - Recall
-     - F1 score
-     - AUC-ROC
-     - Matthews Correlation Coefficient
-   - Visualization of results:
-     - Confusion matrix
-     - ROC curve
-     - Performance metrics comparison
-     - Parameter search results
+3. **模型评估**：
+   - 全面的性能指标（准确率、精确率、召回率、F1、AUC等）
+   - 结果可视化（混淆矩阵、ROC曲线等）
 
-4. **User Interface**:
-   - Interactive command-line interface for model selection and tuning
-   - Batch processing capability for multiple datasets
-   - Customizable evaluation criteria
+4. **用户界面**：
+   - 交互式命令行界面
+   - 批处理能力
+   - 可自定义评估标准
 
-## Advanced Options
+## 高级选项
 
-- **Quick Mode**:
+- **快速模式**：
   ```bash
   python model_tuner.py --input Standardized/CM1/standardized_data.npz --model rf --reduce_params
   ```
-  Reduces parameter combinations to speed up training while maintaining coverage.
+  减少参数组合以加快训练速度。
 
-- **Random Search**:
+- **随机搜索**：
   ```bash
   python model_tuner.py --input Standardized/CM1/standardized_data.npz --model svm --random --n_iter 20
   ```
-  Uses random search instead of grid search with 20 iterations.
+  使用随机搜索代替网格搜索。
 
-- **Custom Scoring**:
+- **自定义评分标准**：
   ```bash
   python model_tuner.py --input Standardized/CM1/standardized_data.npz --model lr --scoring roc_auc
   ```
-  Uses AUC-ROC as the scoring metric instead of the default F1 score.
+  使用AUC-ROC作为评分标准。
 
-## Requirements
+## 环境要求
 
 - Python 3.6+
-- NumPy
-- Pandas
-- Scikit-learn
-- Matplotlib
-- Seaborn (optional)
-- tqdm
+- NumPy, Pandas, Scikit-learn
+- Matplotlib, tqdm, Seaborn(可选)
 
-## Installation
+## 安装依赖
 
 ```bash
 pip install numpy pandas scikit-learn matplotlib tqdm seaborn
 ```
 
-## Results
+## 结果输出
 
-The model generates comprehensive evaluation reports including:
-- Classification report with precision, recall, and F1 score for each class
-- Confusion matrix visualization
-- ROC curve for models that support probability prediction
-- Performance metrics comparison chart
+模型生成全面的评估报告，包括分类报告、混淆矩阵、ROC曲线等。结果保存在`Models/{dataset}/{model}/`目录下。
 
-Results are saved in the `Models/{dataset}/{model}/` directory.
+## 未来工作
 
-## Future Work
+- 实现集成学习方法
+- 探索深度学习方法进行缺陷预测
+- 特征重要性分析
+- 软件演化的时间序列评估
 
-- Implementation of ensemble methods combining multiple models
-- Deep learning approaches for defect prediction
-- Feature importance analysis for better interpretability
-- Time-based evaluation for software evolution studies
+## 许可
 
-## License
+本项目仅供教育目的，使用MIT许可证。
 
-This project is provided for educational purposes and is available under the MIT License.
+## 致谢
 
-## Acknowledgments
-
-- NASA for providing the defect datasets
-- The scikit-learn team for their excellent machine learning library
-- All contributors to this project 
+- NASA提供的缺陷数据集
+- Scikit-learn团队的机器学习库
+- 所有项目贡献者
