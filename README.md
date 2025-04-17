@@ -18,24 +18,69 @@ The project uses NASA defect datasets, which contain software metrics and defect
 ## Project Structure
 
 ```
-├── data_standardizer.py        # Data preprocessing and standardization
+├── arff_to_csv_converter.py    # Tool to convert ARFF files to CSV format
+├── data_loader.py              # Utility for loading and preprocessing data
+├── data_splitter.py            # Tool for splitting data into train/test sets
+├── data_standardizer.py        # Data standardization tool
 ├── model_tuner.py              # Model parameter tuning with cross-validation
 ├── model_tuner_interactive.py  # Interactive interface for model tuning
-├── NASADefectDataset/
-│   ├── Raw/                    # Original NASA datasets
-│   ├── Split/                  # Train-validation-test split datasets
-│   ├── Standardized/           # Standardized datasets
-│   └── Models/                 # Trained models and evaluation results
+├── OriginalData/               # Original NASA datasets in ARFF format
+├── CleanedData/                # Cleaned datasets
+├── CSV/                        # Datasets converted to CSV format
+├── Split/                      # Train-validation-test split datasets
+├── Standardized/               # Standardized datasets
+├── Models/                     # Trained models and evaluation results
 └── README.md
 ```
 
+## Workflow
+
+The complete workflow for this project consists of the following steps:
+
+1. **Data Conversion** (if needed):
+   ```bash
+   python arff_to_csv_converter.py
+   ```
+   Converts the original ARFF files to CSV format for easier processing.
+
+2. **Data Loading and Cleaning**:
+   ```bash
+   python data_loader.py
+   ```
+   Loads the datasets, handles missing values, and performs basic preprocessing.
+
+3. **Train-Test Splitting**:
+   ```bash
+   python data_splitter.py --dataset CM1
+   ```
+   Splits a specific dataset into training, validation, and test sets.
+
+4. **Data Standardization**:
+   ```bash
+   python data_standardizer.py --dataset CM1 --verify
+   ```
+   Standardizes the dataset and verifies the standardization results.
+
+5. **Model Tuning**:
+   ```bash
+   python model_tuner.py --input Standardized/CM1/standardized_data.npz --model rf
+   ```
+   Tunes a Random Forest model using grid search and cross-validation.
+
+6. **Interactive Model Tuning** (alternative to step 5):
+   ```bash
+   python model_tuner_interactive.py
+   ```
+   Launches an interactive interface for dataset selection and model tuning.
+
 ## Features
 
-1. **Data Preprocessing and Standardization**:
+1. **Data Processing Pipeline**:
+   - Converting ARFF to CSV format
    - Loading and cleaning NASA defect datasets
    - Handling missing values
-   - Feature standardization (zero mean and unit variance)
    - Train-validation-test splitting
+   - Feature standardization (zero mean and unit variance)
    - Verification of standardization results
 
 2. **Model Parameter Tuning**:
@@ -68,43 +113,23 @@ The project uses NASA defect datasets, which contain software metrics and defect
    - Batch processing capability for multiple datasets
    - Customizable evaluation criteria
 
-## Workflow
-
-1. **Data Preparation**:
-   ```bash
-   python data_standardizer.py --dataset CM1 --verify
-   ```
-   This standardizes the CM1 dataset and verifies the standardization results.
-
-2. **Model Tuning**:
-   ```bash
-   python model_tuner.py --input NASADefectDataset/Standardized/CM1/standardized_data.npz --model rf
-   ```
-   This tunes a Random Forest model using grid search and cross-validation.
-
-3. **Interactive Tuning**:
-   ```bash
-   python model_tuner_interactive.py
-   ```
-   This launches an interactive interface for dataset selection and model tuning.
-
 ## Advanced Options
 
 - **Quick Mode**:
   ```bash
-  python model_tuner.py --input NASADefectDataset/Standardized/CM1/standardized_data.npz --model rf --reduce_params
+  python model_tuner.py --input Standardized/CM1/standardized_data.npz --model rf --reduce_params
   ```
   Reduces parameter combinations to speed up training while maintaining coverage.
 
 - **Random Search**:
   ```bash
-  python model_tuner.py --input NASADefectDataset/Standardized/CM1/standardized_data.npz --model svm --random --n_iter 20
+  python model_tuner.py --input Standardized/CM1/standardized_data.npz --model svm --random --n_iter 20
   ```
   Uses random search instead of grid search with 20 iterations.
 
 - **Custom Scoring**:
   ```bash
-  python model_tuner.py --input NASADefectDataset/Standardized/CM1/standardized_data.npz --model lr --scoring roc_auc
+  python model_tuner.py --input Standardized/CM1/standardized_data.npz --model lr --scoring roc_auc
   ```
   Uses AUC-ROC as the scoring metric instead of the default F1 score.
 
@@ -118,6 +143,12 @@ The project uses NASA defect datasets, which contain software metrics and defect
 - Seaborn (optional)
 - tqdm
 
+## Installation
+
+```bash
+pip install numpy pandas scikit-learn matplotlib tqdm seaborn
+```
+
 ## Results
 
 The model generates comprehensive evaluation reports including:
@@ -126,7 +157,7 @@ The model generates comprehensive evaluation reports including:
 - ROC curve for models that support probability prediction
 - Performance metrics comparison chart
 
-Results are saved in the `NASADefectDataset/Models/{dataset}/{model}/` directory.
+Results are saved in the `Models/{dataset}/{model}/` directory.
 
 ## Future Work
 
@@ -143,4 +174,4 @@ This project is provided for educational purposes and is available under the MIT
 
 - NASA for providing the defect datasets
 - The scikit-learn team for their excellent machine learning library
-- All contributors to this project
+- All contributors to this project 
