@@ -167,7 +167,7 @@ def get_eigen_target(csv_dir, save_to_disk=False, output_dir=None):
 
 if __name__ == "__main__":
     # CSV文件目录
-    csv_dir = r"C:\Users\86159\Desktop\软件测试\期末大作业\SoftwareHomeWork\CSV_Data"
+    csv_dir = os.path.join(os.path.dirname(__file__), "CSV_Data")
     
     # 处理数据并保存到磁盘
     get_eigen_target(csv_dir, save_to_disk=True)

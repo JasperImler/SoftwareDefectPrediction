@@ -54,7 +54,7 @@ def standardize_all_datasets(base_dir, output_base_dir):
 
 if __name__ == '__main__':
     # 设置包含所有数据集的基础目录
-    base_dir = r'C:\Users\86159\Desktop\软件测试\期末大作业\SoftwareHomeWork\SplitDatasets'
+    base_dir = os.path.join(os.path.dirname(__file__), 'SplitDatasets')
     # 设置标准化后数据集的保存目录
-    output_base_dir = r'C:\Users\86159\Desktop\软件测试\期末大作业\SoftwareHomeWork\StandardizedDatasets'
+    output_base_dir = os.path.join(os.path.dirname(__file__), 'StandardizedDatasets')
     standardize_all_datasets(base_dir, output_base_dir)

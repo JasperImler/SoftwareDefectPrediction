@@ -100,9 +100,9 @@ def convert_directory(input_dir, output_dir=None):
 
 if __name__ == "__main__":
     # 指定包含 ARFF 文件的目录 D'
-    input_directory = r"C:\Users\86159\Desktop\软件测试\期末大作业\SoftwareHomeWork\HDP_pyjnius\dataset\Relink"
+    input_directory = os.path.join(os.path.dirname(__file__), "HDP_pyjnius", "dataset", "Relink")
     
     # 可以指定输出目录，如果不指定则使用相同目录
-    output_directory = r"c:\Users\86159\Desktop\软件测试\期末大作业\SoftWareHomeWork\CSV_Data"
+    output_directory = os.path.join(os.path.dirname(__file__), "CSV_Data")
     
     convert_directory(input_directory, output_directory)
